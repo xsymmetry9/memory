@@ -17,7 +17,6 @@ const Timer = ({setGameOver}) =>{
             setGameOver(prevGame => prevGame = true);
         }
     }, [time]);
-    console.log(time);
     const Print = () =>{
         return (
             <>
