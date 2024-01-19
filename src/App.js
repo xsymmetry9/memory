@@ -32,6 +32,8 @@ function App () {
     const Game = () =>{
         const [numberOfCards, setNumberOfCards] = useState(10);
         const [cards, setCards] = useState(Array.from({length: numberOfCards}, () => ({})));
+        const [score, setScore] = useState(0);
+        const [memory, setMemory] = useState([]);
 
         useEffect(() => {
             const fetchPokemon = async () => {
@@ -50,8 +52,20 @@ function App () {
           }, [numberOfCards]);
      
 
-        const getInfo = () =>{
-            setCards(shuffledCards(cards));
+        
+        const getInfo = (e) =>{
+
+            if(memory.includes(e.currentTarget.name))
+            {
+                alert("you lose");
+                setScore(0);
+                setCards(shuffledCards(cards));
+            } else {
+                memory.push(e.currentTarget.name);
+                setScore(prevScore => prevScore + 1);
+                setCards(shuffledCards(cards));
+            }
+
         }
         const handleInputCards = (e) =>{
             setNumberOfCards(e.currentTarget.value);
@@ -64,12 +78,13 @@ function App () {
                 <label>Number of pokemon
                     <input onChange={handleInputCards} value = {numberOfCards} />
                 </label>
+                <p>Score: {score}</p>
                 <div className="display-cards">
                     {cards.map((item, index) =>{
                         return(
-                        <button key ={index} className="cards" onClick={getInfo} value={item.name}>
+                        <button key ={index} className="cards" onClick={getInfo} name={item.name}>
                             <img key={item.id} className="pokemon-card" src = {item.imgUrl} />
-                            <p key={`${item.id}-text`}>{item.name}</p>
+                            <p className="pokemon-name" key={`${item.id}-text`}>{item.name}</p>
                         </button>)
                     })}
            
