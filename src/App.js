@@ -4,6 +4,16 @@ import ReactDOM from 'react-dom';
 // import Timer from './components/Timer.js';
 // import Button from './components/Button.js';
 
+const shuffledCards = (array) =>{
+    let newArray = [];
+
+    while(array.length > 0)
+    {
+        let index = Math.floor(Math.random() * array.length);
+        newArray.push(array.splice(index, 1)[0]);
+    }
+    return newArray;
+}
 async function createPokemon(id){
     const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id + 1}`);
     if(!pokemon.ok) return "Error";
@@ -20,7 +30,6 @@ async function createPokemon(id){
 function App () {
     
     const Game = () =>{
-        const [id, setId] = useState(100);
         const [numberOfCards, setNumberOfCards] = useState(10);
         const [cards, setCards] = useState(Array.from({length: numberOfCards}, () => ({})));
 
@@ -28,8 +37,9 @@ function App () {
             const fetchPokemon = async () => {
               try {
                 const newCards = await Promise.all(
-                  Array.from({ length: numberOfCards }, (_, index) => createPokemon(id + index + 1))
+                  Array.from({ length: numberOfCards }, (_, index) => createPokemon(index + 1))
                 );
+                
                 setCards(newCards);
               } catch (error) {
                 console.error('Error fetching Pokemon data', error);
@@ -37,34 +47,30 @@ function App () {
             };
       
             fetchPokemon();
-          }, [id, numberOfCards]);
+          }, [numberOfCards]);
+     
 
-        const handleInputId = (e) =>{
-            setId(e.currentTarget.value);
+        const getInfo = () =>{
+            setCards(shuffledCards(cards));
         }
         const handleInputCards = (e) =>{
             setNumberOfCards(e.currentTarget.value);
         }
 
-        console.log(cards);
-
 
         return(
             <>
                 <h1>Memory Game</h1>
-                <label>Pokemon Id: 
-                    <input onChange={handleInputId} value = {id}/>
-                </label>
                 <label>Number of pokemon
                     <input onChange={handleInputCards} value = {numberOfCards} />
                 </label>
                 <div className="display-cards">
                     {cards.map((item, index) =>{
                         return(
-                        <div key ={item.id} className="cards">
-                            <img className="pokemon-card" key={index} src = {item.imgUrl} />
-                            <p>{item.name}</p>
-                        </div>)
+                        <button key ={index} className="cards" onClick={getInfo} value={item.name}>
+                            <img key={item.id} className="pokemon-card" src = {item.imgUrl} />
+                            <p key={`${item.id}-text`}>{item.name}</p>
+                        </button>)
                     })}
            
                 </div>
