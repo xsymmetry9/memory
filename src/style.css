@@ -9,9 +9,85 @@ body{
 }
 h1{
     font-size: 2.8rem;
-    margin-top: 3rem;
     text-align: center;
 }
+p{
+    font-size: 1.13rem;
+    line-height: 1.5;
+    font-weight: 300;
+}
+header{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 60px;
+    background-color: rgb(16, 16, 13);
+    color: white;
+}
+
+.input-form{
+    display: block;
+    margin-top: 3rem;
+    margin-inline: auto;
+    display: grid;
+    background-color: rgb(243, 241, 207);
+    max-width: 500px;
+    width: 100%;
+    border: 3px solid rgb(166, 160, 54);
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    padding: 2rem 0;
+}
+
+.input-form > h1{
+    padding-bottom: 1.2rem;
+}
+
+.input-form button{
+    font-size: 1.3rem;
+    width: 100px;
+    padding-bottom: 12px 6px;
+    justify-self: center;
+}
+
+.input-form input[type="text"]{
+    border-radius: 5px;
+    border: 1px solid green;
+    padding: 8px 6px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(45, 45, 45);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-form input[type="radio"]{
+    margin-right: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(45,45,45);
+}
+
+.input-form .grid-single-row{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0 1.2rem;
+}
+.input-form .even-rows{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    align-items: center;
+    width: 100%;
+}
+
+.highScore-container{
+    display: grid;
+    grid-template-columns: 150px 100px;
+    padding-right: 8px;
+    gap: .8rem;
+}
+
 
 .display-cards{
     margin-top: 3rem;
@@ -46,4 +122,19 @@ h1{
     font-size: 1rem;
     line-height: 1.5;
     text-transform: capitalize;
+}
+
+.score-board{
+    display: grid;
+    grid-template-columns: 1fr .8fr;
+    border: 3px solid red;
+
+    width: 300px;
+    margin-inline: auto;
+    align-items: center;
+
+}
+.score-board p{
+    font-size: 1.2rem;
+    padding: .8rem 1.2rem;
 }
