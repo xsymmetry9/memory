@@ -167,15 +167,15 @@ function App () {
                         </>            
                     }
                     {isGameOver && 
-                        <div>
-                            <h1>{player.name}, your score is {player.score}</h1>
-                            <p>Would you like to try again?</p>
-                            <button onClick={reset}>Enter</button>
-                            <button onClick= {handleMenu}>New Player</button>
+                        <div className="message-board">
+                            <h2>{player.name}, your score is {player.score}</h2>
+                            <div className="buttons-group">
+                                <button id="again" onClick={reset}>Again?</button>
+                                <button onClick= {handleMenu}>New Player</button>
+                            </div>
+             
                         
                         </div>}
-            
-
                     </div>
                 
                 }

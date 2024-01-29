@@ -24,6 +24,23 @@ header{
     background-color: rgb(16, 16, 13);
     color: white;
 }
+button{
+    cursor:pointer;
+    width: 100px;
+    padding: .6rem 0;
+    background-color: rgb(230, 230, 12);
+    border: none;
+    border-radius: 5px;
+    font-size: .9rem;
+    font-weight: 700;
+    box-shadow: 0px 2px 1px 1px rgb(99, 99, 42);
+}
+button:hover, button:active{
+    background-color:rgba(230, 230, 12, .4)
+}
+.title{
+    margin-top: 3rem;
+}
 
 .input-form{
     display: block;
@@ -97,6 +114,8 @@ header{
     flex-wrap: wrap;
     gap: 12px;
 
+    background-color: none;
+
 }
 
 .cards{
@@ -110,6 +129,7 @@ header{
     border-radius: 12px;
     width: 200px;
     height: 200px;
+    background-color: #fff;
 
     cursor: pointer;
 }
@@ -127,7 +147,10 @@ header{
 .score-board{
     display: grid;
     grid-template-columns: 1fr .8fr;
-    border: 3px solid red;
+    border: 3px solid rgb(255, 217, 0);
+    background-color: #fff;
+
+    margin-top: 3rem;
 
     width: 300px;
     margin-inline: auto;
@@ -137,4 +160,38 @@ header{
 .score-board p{
     font-size: 1.2rem;
     padding: .8rem 1.2rem;
+}
+
+.message-board{
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid rgb(255, 217, 0);
+    max-width: 500px;
+    width: 100%;
+    margin-inline: auto;
+    background-color: #fff;
+    border-radius: 12px;
+}
+.message-board h2{
+    text-align: center;
+    padding: 1.2rem 0;
+}
+.message-board p{
+    text-align: center;
+    padding-bottom: 1.2rem;
+}
+.buttons-group{
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+}
+#again{
+    color: white;
+    background-color: blue;
+}
+#again:hover, #again:active{
+    color: black;
+    background-color: rgba(0, 0, 255, 0.3);
 }
