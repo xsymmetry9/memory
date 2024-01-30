@@ -172,9 +172,7 @@ function App () {
                             <div className="buttons-group">
                                 <button id="again" onClick={reset}>Again?</button>
                                 <button onClick= {handleMenu}>New Player</button>
-                            </div>
-             
-                        
+                            </div>            
                         </div>}
                     </div>
                 
