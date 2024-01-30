@@ -8,7 +8,7 @@ The **Memory Card** project is created for educational purpose.  It was assigned
 
 ![To preview](https://xsymmetry9.github.io/memory/)
 
-## **Featuress**
+## **Features**
 *Difficult Level
 
 ## **Outcome**
