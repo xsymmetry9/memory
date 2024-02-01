@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {v4 as uuid} from "uuid";
 import ReactDOM from 'react-dom';
 import IntroBox from './components/IntroBox';
+import Header from './components/Header';
+import Footer from './components/Footer';
 // import Timer from './components/Timer.js';
 // import Button from './components/Button.js';
 
@@ -56,10 +58,8 @@ function App () {
         const [cards, setCards] = useState(Array.from({length: checkLevel(player.level)}, () => ({})));
         const [memory, setMemory] = useState([]);
 
-
         //high score box
         const [highScorer, setHighScorer] = useState({name:"", score: 0}); //could be set to local memory
-
 
         useEffect(() => {
             const fetchPokemon = async () => {
@@ -77,7 +77,6 @@ function App () {
             fetchPokemon();
           }, [checkLevel(player.level)]);
      
-
         const clearMemory = () =>{
             setMemory(prevMemory => 
                 {
@@ -136,12 +135,7 @@ function App () {
 
         return(
             <>
-                <header>
-                    <div className="highScore-container">
-                            <p>Name: {highScorer.name}</p>
-                            <p>HighScore: {highScorer.score}</p>
-                    </div>
-                </header>
+                <Header highScorer = {highScorer}/>
                 {introDisplay && <IntroBox player = {player} handlePlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
                 {!introDisplay && 
                 
@@ -177,6 +171,7 @@ function App () {
                     </div>
                 
                 }
+                <Footer />
             </>
         )
     }
