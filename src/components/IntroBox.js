@@ -24,7 +24,7 @@ const IntroBox = ({handlePlayer, handle}) =>{
                                 name= "level"
                                 className="input-radio"
                                 value= {item.name}
-                                checked = {item.name === level}
+                                checked = {item.name.toLowerCase() === level}
                                 onChange = {onHandleLevels}
                                 />
                             {item.name}
