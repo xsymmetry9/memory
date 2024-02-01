@@ -1,12 +1,20 @@
-*{
+
+:root{
+    --bg-color: rgb(244, 244, 149); 
+    --dark: rgb(16, 16, 13);
+    --light: #fff;
+}
+    *{
     padding: 0;
     margin: 0;
 }
 
 body{
-    background: rgb(244, 244, 149);
-    color: black;
+    background: var(--bg-color);
+    color: var(--dark);
+    min-height: 100vh;
 }
+
 h1{
     font-size: 2.8rem;
     text-align: center;
@@ -17,12 +25,15 @@ p{
     font-weight: 300;
 }
 header{
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 60px;
-    background-color: rgb(16, 16, 13);
-    color: white;
+    background-color: var(--dark);
+    color: var(--light);
 }
 button{
     cursor:pointer;
@@ -34,21 +45,13 @@ button{
     font-size: .9rem;
     font-weight: 700;
     box-shadow: 0px 2px 1px 1px rgb(99, 99, 42);
-    color: white;
+    color: var(--light);
 
     transition: background-color .5s ease-out 0.25s, color .5s ease-out 0.25s;
 }
-button:hover, button:active{
-    color: black;
-    background-color:rgba(29, 187, 71, 0.4);
-}
-.title{
-    margin-top: 3rem;
-}
 
 .input-form{
-    display: block;
-    margin-top: 3rem;
+ 
     margin-inline: auto;
     display: grid;
     background-color: rgb(243, 241, 207);
@@ -60,6 +63,11 @@ button:hover, button:active{
     height: auto;
     padding: 2rem 0;
 }
+
+.title{
+    margin-top: 3rem;
+}
+
 
 .input-form > h1{
     padding-bottom: 1.2rem;
@@ -83,10 +91,11 @@ button:hover, button:active{
     box-sizing: border-box;
 }
 
-.input-form input[type="radio"]{
-    margin-right: 1.2rem;
+label{
     font-size: 1.2rem;
-    font-weight: 400;
+}
+.input-form input[type="radio"]{
+    margin-right: .6rem;
     color: rgb(45,45,45);
 }
 
@@ -109,35 +118,43 @@ button:hover, button:active{
     gap: .8rem;
 }
 
-
 .display-cards{
     margin-top: 3rem;
     margin-inline: auto;
-    width: 1000px;
+    max-width: 1000px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-
+    gap: 30px;
     background-color: none;
-
+}
+@media only screen and (max-width: 600px){
+    .display-cards{
+        justify-content: center;
+    }
 }
 
 .cards{
+    color: #000;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: .8rem;
 
-    border: 2px solid lightgray;
+    border: none;
     border-radius: 12px;
     width: 200px;
     height: 200px;
     background-color: #fff;
-
+    transition: transform 0.3s ease-in-out;
     cursor: pointer;
 }
 
+.cards:hover, .cards:focus{
+    transform: scale(1.1);
+    border: var(--dark) 3px solid;
+}
 .pokemon-card{
     width: 150px;
     height: 150px;
@@ -198,4 +215,30 @@ button:hover, button:active{
 #again:hover, #again:active{
     color: black;
     background-color: rgba(0, 0, 255, 0.3);
+}
+
+footer{
+    background-color: green;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+footer > .container{
+    color: var(--light);
+    max-width: 1000px;
+    width: 100%;
+    margin-inline: auto;
+    border: 1px solid green;
+}
+
+footer > .container > ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem 0;
+}
+
+footer > .container > ul > li{
+    font-size: 1rem;
 }
