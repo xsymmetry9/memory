@@ -68,15 +68,11 @@ button{
     border: 3px solid rgb(166, 160, 54);
     border-radius: 20px;
     width: 100%;
-    height: 300px;
     padding: 2rem 0;
 }
 
 .title{
     margin-top: 3rem;
-}
-
-.input-form > h1{
     padding-bottom: 1.2rem;
 }
 
@@ -118,7 +114,15 @@ label{
     align-items: center;
     width: 100%;
 }
-
+.level-container{
+    display: grid;
+    gap: 3px;
+    padding-bottom: 2rem;
+}
+.level-items{
+    text-transform: capitalize;
+    font-size: .99rem;
+}
 .highScore-container{
     display: grid;
     grid-template-columns: 150px 100px;

@@ -13,7 +13,8 @@ const IntroBox = ({handlePlayer, handle}) =>{
 
     const Levels = () =>{
         return(
-            <>
+            <div className="level-container">
+                <p>Choose your desired level:</p>
              {
                 levels.map((item, index) => {
                     return(
@@ -27,11 +28,11 @@ const IntroBox = ({handlePlayer, handle}) =>{
                                 checked = {item.name.toLowerCase() === level}
                                 onChange = {onHandleLevels}
                                 />
-                            {item.name}
+                            <span className='level-items'>{item.name}</span>
                         </label>)
             })}
         
-            </>
+            </div>
         )
     }
     
@@ -49,7 +50,7 @@ const IntroBox = ({handlePlayer, handle}) =>{
     return(
         <>
             <div className="input-form">
-                 <h1>Memory Game</h1> 
+                 <h1 className='title'>Memory Game</h1> 
                  <div className='grid-single-row'>
                         <label className='even-rows'>
                            <p>
@@ -58,8 +59,9 @@ const IntroBox = ({handlePlayer, handle}) =>{
                             <input type="text" value={name} onChange={handleName}></input>
                         </label>
                         <Levels />
-                        <button onClick={() => handleSubmit(name, level)}>Enter</button>
                     </div>  
+                    <button onClick={() => handleSubmit(name, level)}>Enter</button>
+
             
             </div>
         
