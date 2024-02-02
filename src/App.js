@@ -39,7 +39,7 @@ const checkLevel = (item) => {
     }
     else if(item === "hard")
     {
-        return 7;
+        return 10;
     } else{
         return alert("error");
     }
@@ -136,12 +136,13 @@ function App () {
         return(
             <>
                 <Header highScorer = {highScorer}/>
+                <div className="gameContent">
+                    
+                </div>
                 {introDisplay && <IntroBox player = {player} handlePlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
                 {!introDisplay && 
                 
                 <div className="game-display">
-                    <h1 className="title">Memory Game</h1>
-
                     {!isGameOver && 
                         <>
                             <div className="display-cards">
@@ -155,8 +156,8 @@ function App () {
 
                                 </div>
                                 <div className="score-board">
-                                <p className="left">{player.name}</p>
-                                <p className="right player-score">Score: {player.score}</p>
+                                    <p className="left">{player.name}</p>
+                                    <p className="right player-score">Score: {player.score}</p>
                                 </div>           
                         </>            
                     }
