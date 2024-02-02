@@ -76,7 +76,6 @@ button{
     margin-top: 3rem;
 }
 
-
 .input-form > h1{
     padding-bottom: 1.2rem;
 }
@@ -114,6 +113,7 @@ label{
 }
 .input-form .even-rows{
     display: grid;
+    gap: 5px;
     grid-template-columns: 1fr 1.5fr;
     align-items: center;
     width: 100%;
@@ -186,6 +186,7 @@ label{
 
 }
 .score-board p{
+    color: var(--dark);
     font-size: 1.2rem;
     padding: .8rem 1.2rem;
 }
@@ -202,6 +203,7 @@ label{
     border-radius: 12px;
 }
 .message-board h2{
+    color: var(--dark);
     text-align: center;
     padding: 1.2rem 0;
 }
