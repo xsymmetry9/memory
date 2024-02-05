@@ -50,7 +50,6 @@ const IntroBox = ({handlePlayer, handle}) =>{
     return(
         <>
             <div className="input-form">
-                 <h1 className='title'>Memory Game</h1> 
                  <div className='grid-single-row'>
                         <label className='even-rows'>
                            <p>
