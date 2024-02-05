@@ -27,12 +27,14 @@ header{
     top: 0;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 60px;
-    background-color: var(--dark);
+    justify-content: center;
     border-bottom: 3px solid var(--light);
-    color: var(--light);
+}
+header.dark-theme{
+    border-bottom: 3px solid var(--light);
+}
+header.light-theme{
+    border-bottom: 3px solid var(--dark);
 }
 button{
     cursor:pointer;
@@ -46,6 +48,15 @@ button{
     box-shadow: 0px 2px 1px 1px rgb(99, 99, 42);
     color: var(--light);
     transition: background-color .5s ease-out 0.25s, color .5s ease-out 0.25s;
+}
+
+.dark-theme{
+    background-color: var(--dark);
+    color: var(--light)
+}
+.light-theme{
+    background-color: var(--light);
+    color: var(--dark);
 }
 .game-display{
     display: flex;
@@ -231,14 +242,18 @@ label{
 }
 
 footer{
-    background-color: var(--dark);
     position: fixed;
     bottom: 0;
     width: 100%;
-    border-top: 3px solid var(--light);
+    border-top: 3px solid;
+}
+footer.dark-theme{
+    border-color: var(--light);
+}
+footer.light-theme{
+    border-color: var(--dark);
 }
 footer > .container{
-    color: var(--light);
     max-width: 1000px;
     width: 100%;
     margin-inline: auto;
@@ -255,3 +270,6 @@ footer > .container > ul{
 footer > .container > ul > li{
     font-size: 1rem;
 }
+
+/* Toggle Button for Dark and White Background */
+

@@ -4,10 +4,10 @@ const now = new Date();
 const year = now.getFullYear();
 
 
-const Footer = () =>{
+const Footer = ({theme}) =>{
     return(
         <>
-            <footer>
+            <footer className={`${theme === "light" ? "light-theme" : "dark-theme"}`}>
                 <div className="container">
                     <ul>
                         <li>© {year}</li>

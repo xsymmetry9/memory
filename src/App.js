@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {v4 as uuid} from "uuid";
-import ReactDOM from 'react-dom';
 import IntroBox from './components/IntroBox';
 import Header from './components/Header';
 import Footer from './components/Footer';
-// import Timer from './components/Timer.js';
-// import Button from './components/Button.js';
 
 const shuffledCards = (array) =>{
     let newArray = [];
@@ -49,6 +46,17 @@ const checkLevel = (item) => {
 function App () {
     
     const Game = () =>{
+        //Sets the background theme
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+        const [theme, setTheme] = useState(prefersDarkScheme.matches ? "dark" : "light");
+
+        const body = document.querySelector("body");
+        body.style.backgroundColor = `${theme === "dark" ? "var(--dark)" : "var(--light)"}`;
+
+        const changeTheme = () => {
+            setTheme(theme => theme === "dark" ? "light" : "dark");
+        }
+
         //Creates a player
         const [introDisplay, setIntroDisplay] = useState(true);
         const [player, setPlayer] = useState({name: "Gary", level: "hard", score: 0})
@@ -135,7 +143,7 @@ function App () {
 
         return(
             <>
-                <Header highScorer = {highScorer}/>
+                <Header theme = {theme} highScorer = {highScorer} darkWhiteBtn = {changeTheme}/>
                 <div className="gameContent">
                     
                 </div>
@@ -172,7 +180,7 @@ function App () {
                     </div>
                 
                 }
-                <Footer />
+                <Footer theme ={theme}/>
             </>
         )
     }
