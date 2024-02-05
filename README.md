@@ -3,9 +3,6 @@
 The **Memory Card** project is created for educational purpose.  It was assigned by **The Odin Project**
 [course](https://www.theodinproject.com/lessons/node-path-react-new-memory-card)
 
-<br>
-<br>
-
 [To preview](https://xsymmetry9.github.io/memory/)
 
 ## **Features**
