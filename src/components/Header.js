@@ -1,4 +1,5 @@
 import React from "react";
+import logoURL from "./images/pokeball.png"
 
 const Header = ({theme, highScorer, darkWhiteBtn}) =>{
     const setBackground = () =>{
@@ -20,9 +21,12 @@ const Header = ({theme, highScorer, darkWhiteBtn}) =>{
             </div>
         )
     }
-    console.log(setBackground());
     return(
         <header className= {`${theme === "light" ? "light-theme" : "dark-theme"}`}>
+            <div className="left">
+                <a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons"><img className= "logo" src={logoURL}/></a>
+                <h1>Po-kery</h1>
+            </div>
             <HighScoreBox data = {highScorer} />
             <DarkAndWhiteBtn />
         </header>
