@@ -1,41 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
+async function fetchPokemonData(id){
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    if(!pokemon.ok) return "Error";
+    const pokemonJson = await pokemon.json();
+    return{
+        name: pokemonJson.name,
+        imgUrl: pokemonJson.sprites.other['official-artwork']['front_default'],
+    };
+}
 const IntroBox = ({handlePlayer, handle}) =>{
 
-    const [name, setName] = useState("Terry");
-    const [level, setLevel] = useState("medium");
+    const [btnBackground, setBtnBackground] = useState([]); //sets a url
 
-    const levels = [{name: "easy", value: 3}, {name: "medium", value: 5}, {name: "hard", value: 10}];
+    const [name, setName] = useState(""); //sets the name
 
-    const onHandleLevels = (e) =>{
-        setLevel(e.currentTarget.value);
-    }
-
-    const Levels = () =>{
-        return(
-            <div className="level-container">
-                <p>Choose your desired level:</p>
-             {
-                levels.map((item, index) => {
-                    return(
-                        <label key={index}>
-                            <input
-                                type="radio"
-                                id={`radio-${index}`}
-                                name= "level"
-                                className="input-radio"
-                                value= {item.name}
-                                checked = {item.name.toLowerCase() === level}
-                                onChange = {onHandleLevels}
-                                />
-                            <span className='level-items'>{item.name}</span>
-                        </label>)
-            })}
-        
-            </div>
-        )
-    }
-    
     const handleName = (e) =>{
         setName(prevState => e.target.value)
     }
@@ -46,6 +25,23 @@ const IntroBox = ({handlePlayer, handle}) =>{
         handlePlayer(name, level)
         handle(prevState => !prevState);
     }
+
+    useEffect(() => {
+        async function getPokemon(pokemonNames){
+            try{
+                const newPokemons = await Promise.all(
+                   pokemonNames.map((name) => fetchPokemonData(name))
+                );
+                setBtnBackground(newPokemons);
+            } catch (error){
+                console.error("Error fetching data:", error);
+            }
+        }
+        const pokemonNames = ['pikachu', 'charizard', 'snorlax', 'mewtwo'];
+        getPokemon(pokemonNames);
+    },[])
+
+    console.log(btnBackground);
     
     return(
         <>
@@ -57,9 +53,36 @@ const IntroBox = ({handlePlayer, handle}) =>{
                            </p>
                             <input type="text" value={name} onChange={handleName}></input>
                         </label>
-                        <Levels />
                     </div>  
-                    <button onClick={() => handleSubmit(name, level)}>Enter</button>
+                    <div className="btn-levels-group">
+                        <div className='btn-level-container'>
+                            <button className="btn-level"
+                            style={{
+                                backgroundImage: `url(${btnBackground[0]?.imgUrl})`,
+                            }} onClick={() => handleSubmit(name, "")} disabled>Campaign</button>
+                        </div>
+                        <div className="btn-level-container">
+                            <button className="btn-level" 
+                            style={{
+                                backgroundImage: `url(${btnBackground[1]?.imgUrl})`,
+                            }}
+                            onClick={() => handleSubmit(name, "easy")}>Easy</button>
+                        </div>
+                        <div className= "btn-level-container">
+                            <button className="btn-level"
+                            style={{
+                                backgroundImage: `url(${btnBackground[2]?.imgUrl})`,
+                            }} onClick={() => handleSubmit(name, "medium")}>Medium</button>
+                        </div>
+                        <div className= "btn-level-container">
+                            <button className="btn-level" 
+                                style={{
+                                    backgroundImage: `url(${btnBackground[3]?.imgUrl})`,
+                                }}
+                                onClick={() => handleSubmit(name, "hard")}>Hard</button>
+                        </div>
+                    </div>
+          
 
             
             </div>
