@@ -13,7 +13,7 @@ const IntroBox = ({handlePlayer, handle}) =>{
 
     const [btnBackground, setBtnBackground] = useState([]); //sets a url
 
-    const [name, setName] = useState(""); //sets the name
+    const [name, setName] = useState("DEFAULT"); //sets the name
 
     const handleName = (e) =>{
         setName(prevState => e.target.value)
