@@ -26,17 +26,32 @@ header{
     position: fixed;
     top: 0;
     width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    padding: 10px 0;
     border-bottom: 3px solid var(--light);
 }
-
+header .header-container{
+    display: grid;
+    max-width: 1100px;
+    margin-inline: auto;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: space-around;
+}
+header .right{
+    padding-right: 5px;
+    justify-self: end;
+}
+header .header-left{
+    display: flex;
+    align-self: center;
+    padding-left: 5px;
+    gap: 12px;
+}
 @media (max-width: 55em)
 {
-    header{
-        display: none;
+    header .header-left h1{
+        font-size: 2rem;
     }
     footer{
         display: none;
@@ -51,11 +66,23 @@ header.light-theme{
 button{
     cursor:pointer;
     padding: .6rem 0;
-    border-radius: 5px;
     font-size: .9rem;
     font-weight: 700;
 }
-
+button.light{
+    background-color: white;
+}
+.darkWhiteToggle{
+}
+.darkWhiteToggleBtn{
+    border: none;
+    border-radius: 5px;
+    padding: .5rem;
+    outline: 1px solid var(--dark);
+}
+.darkWhiteToggleBtn:hover, .darkWhiteToggleBtn:active{
+    outline: 3px solid var(--dark);
+}
 .dark-theme{
     background-color: var(--dark);
     color: var(--light)
@@ -98,7 +125,8 @@ button{
 @media (max-width: 55em)
 {
     .input-form{
-        margin-top: 5rem;
+        margin-top: 0;
+        height: 100vh;
     }
 }
 
@@ -126,14 +154,11 @@ button{
 }
 
 .btn-levels-group{
-    border: 1px solid green;
     display: grid;
     grid-template-columns: repeat(4, minmax(180px, 1fr));
     gap: 10px;
 }
 .btn-level-container{
-    background-color: white;
-    border: 1px solid blue;
 }
 .btn-level{
     font-size: 1.3rem;
@@ -145,6 +170,9 @@ button{
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+.btn-level:focus, .btn-level:hover{
+    outline: 3px solid black;
 }
 
 @media (max-width: 760px)
@@ -166,14 +194,19 @@ button{
 }
 
 .display-cards{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    margin-top: 6rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     background-color: none;
+    /* height: 100vh; */
+    padding: 8px 8px;
+    gap: 10px;
 }
 @media only screen and (max-width: 600px){
     .display-cards{
+        grid-template-columns: repeat(2, 1fr);
         justify-content: center;
+        margin-top: 0;
     }
 }
 
@@ -187,20 +220,18 @@ button{
 
     border: none;
     border-radius: 12px;
-    width: 200px;
-    height: 200px;
-    background-color: #fff;
+
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
 }
 
 .cards:hover, .cards:focus{
     transform: scale(1.05);
-    border: var(--dark) 3px solid;
+    outline: var(--dark) 3px solid;
 }
 .pokemon-card{
-    width: 150px;
-    height: 150px;
+    width: 90px;
+    height: 90px;
 }
 .pokemon-name{
     font-size: 1rem;
@@ -297,3 +328,6 @@ footer > .container > ul > li{
 
 /* Toggle Button for Dark and White Background */
 
+.hidden{
+    display: hidden;
+}
