@@ -59,7 +59,7 @@ function App () {
 
         //Creates a player
         const [introDisplay, setIntroDisplay] = useState(true);
-        const [player, setPlayer] = useState({name: "Gary", level: "hard", score: 0})
+        const [player, setPlayer] = useState({name: "DEFAULT", level: "hard", score: 0})
 
         //game
         const [isGameOver, isSetGameOver] = useState(false);
@@ -67,7 +67,7 @@ function App () {
         const [memory, setMemory] = useState([]);
 
         //high score box
-        const [highScorer, setHighScorer] = useState({name:"", score: 0}); //could be set to local memory
+        const [highScorer, setHighScorer] = useState({name:"None", score: 0}); //could be set to local memory
 
         useEffect(() => {
             const fetchPokemon = async () => {
@@ -141,9 +141,33 @@ function App () {
             setIntroDisplay(prevState => !prevState);
         }
 
+        const Card = ({item, getInfo}) =>{
+            return(
+                <button className="cards" onClick={getInfo} name={item.name}>
+                    <img key={item.id} className="pokemon-card" src = {item.imgUrl} />
+                    <p className="pokemon-name" key={`${item.id}-text`}>{item.name}</p>
+                </button>
+            )
+        }
+        const Memory = () =>{
+            return (
+                <>
+                 <div className="display-cards">
+                    {cards.map((item, index) =>{
+                        return(<Card key={index} item={item} getInfo={getInfo}/>)
+                    })}
+                </div>
+                <div className="score-board">
+                    <p className="left">{player.name}</p>
+                    <p className="right player-score">Score: {player.score}</p>
+                </div>           
+                </>
+            )
+        }
+
         return(
             <>
-                <Header theme = {theme} highScorer = {highScorer} darkWhiteBtn = {changeTheme}/>
+                <Header theme = {theme} highScorer = {highScorer} darkWhiteBtn = {changeTheme} isGameOver={isGameOver}/>
                 <div className="gameContent">
                     
                 </div>
@@ -151,24 +175,7 @@ function App () {
                 {!introDisplay && 
                 
                 <div className="game-display">
-                    {!isGameOver && 
-                        <>
-                            <div className="display-cards">
-                                {cards.map((item, index) =>{
-                                    return(
-                                    <button key ={index} className="cards" onClick={getInfo} name={item.name}>
-                                        <img key={item.id} className="pokemon-card" src = {item.imgUrl} />
-                                        <p className="pokemon-name" key={`${item.id}-text`}>{item.name}</p>
-                                    </button>)
-                                })}
-
-                                </div>
-                                <div className="score-board">
-                                    <p className="left">{player.name}</p>
-                                    <p className="right player-score">Score: {player.score}</p>
-                                </div>           
-                        </>            
-                    }
+                    {!isGameOver && <Memory />}
                     {isGameOver && 
                         <div className="message-board">
                             <h2>{player.name}, your score is {player.score}</h2>
