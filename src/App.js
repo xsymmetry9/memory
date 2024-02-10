@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {v4 as uuid} from "uuid";
-import IntroBox from './components/IntroBox';
+import MenuBox from './components/MenuBox';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -26,7 +26,11 @@ async function createPokemon(id){
     };
 }
 const checkLevel = (item) => {
-    if(item === "easy")
+    if(item === "campaign")
+    {
+        return 1;
+    }
+    else if(item === "easy")
     {
         return 3;
     }
@@ -59,7 +63,7 @@ function App () {
 
         //Creates a player
         const [introDisplay, setIntroDisplay] = useState(true);
-        const [player, setPlayer] = useState({name: "DEFAULT", level: "hard", score: 0})
+        const [player, setPlayer] = useState({name: "DEFAULT", level: "hard", isGameOver: false, score: 0})
 
         //game
         const [isGameOver, isSetGameOver] = useState(false);
@@ -105,17 +109,17 @@ function App () {
 
             if(memory.includes(pokemonName))
             {
-                console.log("you lose");
+                // console.log("you lose");
                 checksHighScorer();
                 isSetGameOver(true);
                 // reset();
             } else {
-                console.log("Phew...!")
+                // console.log("Phew...!")
                 memory.push(e.currentTarget.name);
                 setPlayer({...player, score: player.score + 1});
                 if(memory.length === cards.length)
                 {
-                    console.log("You win!")
+                    // console.log("You win!")
                     checksHighScorer();
                     isSetGameOver(true);
              
@@ -123,16 +127,15 @@ function App () {
                     setCards(shuffledCards(cards));
                 }
             }
-
         };
 
         const createNewPlayer = (name, level) =>{
-            setPlayer({...player, "name": name, "level": level});
+            setPlayer({...player, "name": name, "level": level, isGameOver: false});
         }
 
         const checksHighScorer = () =>{
             if(player.score > highScorer.score){
-                console.log(player.name + player.score);
+                // console.log(player.name + player.score);
                 setHighScorer({...highScorer, name: player.name, score: player.score})
             }
         }
@@ -149,44 +152,54 @@ function App () {
                 </button>
             )
         }
-        const Memory = () =>{
+        const ScoreBoard = ({pName, pScore}) =>{
             return (
-                <>
-                 <div className="display-cards">
-                    {cards.map((item, index) =>{
-                        return(<Card key={index} item={item} getInfo={getInfo}/>)
-                    })}
-                </div>
+                
                 <div className="score-board">
-                    <p className="left">{player.name}</p>
-                    <p className="right player-score">Score: {player.score}</p>
-                </div>           
-                </>
+                    <p className="left">{pName}</p>
+                    <p className="right player-score">Score: {pScore}</p>
+                </div>  
+                
             )
         }
+        const Memory = () =>{
+            return (
+                <div className="game-container">
+                    <div className="display-cards">
+                        {cards.map((item, index) =>{
+                            return(<Card key={index} item={item} getInfo={getInfo}/>)
+                        })}
+                    </div>
+                    <ScoreBoard pName = {player.name} pScore ={player.score}/>         
+                </div>
+            )
+        }
+        const MessageBoard = ({player, handleToMenu, handleReset}) => {
+            return(
+                <div className="message-board">
+                    <h2>{player.name}, your score is {player.score}</h2>
+                    <div className="buttons-group">
+                        <button id="again" onClick={handleReset}>Again?</button>
+                        <button onClick= {handleToMenu}>New Player</button>
+                    </div>            
+                </div>
+            )
+            }
 
         return(
             <>
                 <Header theme = {theme} highScorer = {highScorer} darkWhiteBtn = {changeTheme} isGameOver={isGameOver}/>
-                <div className="gameContent">
-                    
+                <div className="game-content">
+                    {introDisplay && <MenuBox player = {player} handlePlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
+
+                    {!introDisplay && 
+                        <>
+                            {!isGameOver && <Memory />}
+                            {isGameOver && <MessageBoard player = {player} handleToMenu ={handleMenu} handleReset={reset}/>}
+                        </>
+                    }       
                 </div>
-                {introDisplay && <IntroBox player = {player} handlePlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
-                {!introDisplay && 
-                
-                <div className="game-display">
-                    {!isGameOver && <Memory />}
-                    {isGameOver && 
-                        <div className="message-board">
-                            <h2>{player.name}, your score is {player.score}</h2>
-                            <div className="buttons-group">
-                                <button id="again" onClick={reset}>Again?</button>
-                                <button onClick= {handleMenu}>New Player</button>
-                            </div>            
-                        </div>}
-                    </div>
-                
-                }
+   
                 <Footer theme ={theme}/>
             </>
         )
