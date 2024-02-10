@@ -9,18 +9,18 @@ async function fetchPokemonData(id){
         imgUrl: pokemonJson.sprites.other['official-artwork']['front_default'],
     };
 }
-const IntroBox = ({handlePlayer, handle}) =>{
+const IntroBox = ({player, createPlayer, handle}) =>{
 
     const [btnBackground, setBtnBackground] = useState([]); //sets a url
     const [display, setDisplay] = useState(false);
-    const [name, setName] = useState("DEFAULT"); //sets the name
+    const [name, setName] = useState(`${player.name}`); //sets the name
 
     const handleName = (e) =>{
-        setName(prevState => e.target.value)
+        setName(e.target.value)
     }
         //creates a new Object
     const handleSubmit = (name, level) =>{
-        handlePlayer(name, level)
+        createPlayer(name, level)
         handle(prevState => !prevState);
         // console.log({pName: name, pLevel: level});
     }
@@ -56,7 +56,6 @@ const IntroBox = ({handlePlayer, handle}) =>{
             {display && 
             
             <div className="input-form">
-            <h1>{display ? "It's true" : "It's false"}</h1>
             <div className='input-form-row'>
                 <label className='name-input'>
                     <input type="text" value={name} onChange={handleName} placeholder='PLAYERS_NAME'></input>
@@ -66,7 +65,7 @@ const IntroBox = ({handlePlayer, handle}) =>{
                 <div className='btn-level-container'>
                     <button className="btn-level"
                         style={{
-                            backgroundImage: `url(${btnBackground[0]?.imgUrl})`,
+                            backgroundImage: `url(${btnBackground[0].imgUrl})`,
                         }} onClick={() => handleSubmit(name, "campaign")}
                         >Campaign
                     </button>
@@ -74,20 +73,20 @@ const IntroBox = ({handlePlayer, handle}) =>{
                 <div className="btn-level-container">
                     <button className="btn-level" 
                         style={{
-                            backgroundImage: `url(${btnBackground[1]?.imgUrl})`,
+                            backgroundImage: `url(${btnBackground[1].imgUrl})`,
                         }}
                         onClick={() => handleSubmit(name, "easy")}>Easy</button>
                 </div>
                 <div className= "btn-level-container">
                     <button className="btn-level"
                         style={{
-                            backgroundImage: `url(${btnBackground[2]?.imgUrl})`,
+                            backgroundImage: `url(${btnBackground[2].imgUrl})`,
                         }} onClick={() => handleSubmit(name, "medium")}>Medium</button>
                 </div>
                 <div className= "btn-level-container">
                     <button className="btn-level" 
                         style={{
-                            backgroundImage: `url(${btnBackground[3]?.imgUrl})`,
+                            backgroundImage: `url(${btnBackground[3].imgUrl})`,
                             }}
                             onClick={() => handleSubmit(name, "hard")}>Hard</button>
                 </div>
