@@ -7,7 +7,6 @@ const Header = ({theme, highScorer, darkWhiteBtn, isGameOver}) =>{
     const setBackground = () =>{
         return theme === "light" ? "light-theme" : "dark-theme";
     }
-    console.log(theme);
 
     const darkLightBtnImg = () =>{
         if(theme === "dark")
@@ -42,7 +41,7 @@ const Header = ({theme, highScorer, darkWhiteBtn, isGameOver}) =>{
             <div className="header-container">
                 <div className="header-left">
                     <a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons"><img className= "logo" src={logoURL}/></a>
-                    <h1>Po-kery</h1>
+                    <h1 className="logo-title">Po-kery</h1>
                 </div>
                 <div className="right">
                     <DarkAndWhiteBtn />
