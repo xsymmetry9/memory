@@ -6,7 +6,6 @@ import Footer from './components/Footer';
 
 const shuffledCards = (array) =>{
     let newArray = [];
-
     while(array.length > 0)
     {
         let index = Math.floor(Math.random() * array.length);
@@ -46,10 +45,8 @@ const checkLevel = (item) => {
     }
 }
 
-
-function App () {
+const App = () => {
     
-    const Game = () =>{
         //Sets the background theme
         const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
         const [theme, setTheme] = useState(prefersDarkScheme.matches ? "dark" : "light");
@@ -63,7 +60,7 @@ function App () {
 
         //Creates a player
         const [introDisplay, setIntroDisplay] = useState(true);
-        const [player, setPlayer] = useState({name: "DEFAULT", level: "hard", isGameOver: false, score: 0})
+        const [player, setPlayer] = useState({name: "DEFAULT_NAME", level: "hard", isGameOver: true, score: 0})
 
         //game
         const [isGameOver, isSetGameOver] = useState(false);
@@ -132,6 +129,7 @@ function App () {
         const createNewPlayer = (name, level) =>{
             setPlayer({...player, "name": name, "level": level, isGameOver: false});
         }
+        console.log(player);
 
         const checksHighScorer = () =>{
             if(player.score > highScorer.score){
@@ -144,22 +142,26 @@ function App () {
             setIntroDisplay(prevState => !prevState);
         }
 
+        const getLength = () =>{
+            const getWidthWindow = document.querySelector(".game-content");
+            const length = getWidthWindow.offsetWidth/checkLevel(player.level);
+
+            if(length < 150 || length > 300)
+            {
+                return 200;
+            } else{
+                return length;
+            }
+        }
+
         const Card = ({item, getInfo}) =>{
+            const length = getLength();
+    
             return(
                 <button className="cards" onClick={getInfo} name={item.name}>
-                    <img key={item.id} className="pokemon-card" src = {item.imgUrl} />
+                    <img key={item.id} width={`${length}`} className="pokemon-card" src = {item.imgUrl} />
                     <p className="pokemon-name" key={`${item.id}-text`}>{item.name}</p>
                 </button>
-            )
-        }
-        const ScoreBoard = ({pName, pScore}) =>{
-            return (
-                
-                <div className="score-board">
-                    <p className="left">{pName}</p>
-                    <p className="right player-score">Score: {pScore}</p>
-                </div>  
-                
             )
         }
         const Memory = () =>{
@@ -170,7 +172,6 @@ function App () {
                             return(<Card key={index} item={item} getInfo={getInfo}/>)
                         })}
                     </div>
-                    <ScoreBoard pName = {player.name} pScore ={player.score}/>         
                 </div>
             )
         }
@@ -180,17 +181,17 @@ function App () {
                     <h2>{player.name}, your score is {player.score}</h2>
                     <div className="buttons-group">
                         <button id="again" onClick={handleReset}>Again?</button>
-                        <button onClick= {handleToMenu}>New Player</button>
+                        <button onClick= {handleToMenu}>Change Level</button>
                     </div>            
                 </div>
-            )
+                )
             }
 
         return(
             <>
                 <Header theme = {theme} highScorer = {highScorer} darkWhiteBtn = {changeTheme} isGameOver={isGameOver}/>
                 <div className="game-content">
-                    {introDisplay && <MenuBox player = {player} handlePlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
+                    {introDisplay && <MenuBox player = {player} createPlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
 
                     {!introDisplay && 
                         <>
@@ -200,12 +201,9 @@ function App () {
                     }       
                 </div>
    
-                <Footer theme ={theme}/>
+                <Footer theme ={theme} player = {player}/>
             </>
         )
     }
 
- return <Game />
-
-} 
-export default App
+export default App;
