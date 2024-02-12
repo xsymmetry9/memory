@@ -3,6 +3,7 @@ import {v4 as uuid} from "uuid";
 import MenuBox from './components/MenuBox';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import MessageBoard from "./components/MessageBoard";
 
 const shuffledCards = (array) =>{
     let newArray = [];
@@ -59,22 +60,23 @@ const App = () => {
         }
 
         //Creates a player
+        const [player, setPlayer] = useState({name: "DEFAULT_NAME", mode: "hard", move: [], score: 0, isGameOver: true})
+
         const [introDisplay, setIntroDisplay] = useState(true);
-        const [player, setPlayer] = useState({name: "DEFAULT_NAME", level: "hard", isGameOver: true, score: 0})
 
         //game
-        const [isGameOver, isSetGameOver] = useState(false);
-        const [cards, setCards] = useState(Array.from({length: checkLevel(player.level)}, () => ({})));
+        const [cards, setCards] = useState(Array.from({length: checkLevel(player.mode)}, () => ({})));
         const [memory, setMemory] = useState([]);
 
         //high score box
-        const [highScorer, setHighScorer] = useState({name:"None", score: 0}); //could be set to local memory
+        const [history, setHistory] = useState([]); //could be set to local memory
+        const [message, setMessage] = useState("");
 
         useEffect(() => {
             const fetchPokemon = async () => {
               try {
                 const newCards = await Promise.all(
-                  Array.from({ length: checkLevel(player.level) }, (_, index) => createPokemon(index + 1))
+                  Array.from({ length: checkLevel(player.mode) }, (_, index) => createPokemon(index + 1))
                 );
                 
                 setCards(newCards);
@@ -84,67 +86,64 @@ const App = () => {
             };
       
             fetchPokemon();
-          }, [checkLevel(player.level)]);
-     
-        const clearMemory = () =>{
-            setMemory(prevMemory => 
-                {
-                    while(prevMemory.length > 0){
-                        prevMemory.pop();
-                    }
-                    return prevMemory;
-                });
-        }
-        const reset = () =>{
-            setPlayer({...player, score: 0})
-            clearMemory();
-            setCards(shuffledCards(cards));
-            isSetGameOver(false);
-        }
-        const getInfo = (e) =>{
-            const pokemonName = e.currentTarget.name;
+          }, [checkLevel(player.mode)]);
 
-            if(memory.includes(pokemonName))
+        const createNewPlayer = (name, mode) =>{
+            setPlayer({...player, "name": name, "mode": mode, isGameOver: false});
+        }
+     
+        const reset = () =>{
+            setPlayer({...player, score: 0, isGameOver: false, move: []});
+        }
+
+        const playerMove = (e) =>{
+            const pokemonName = e.currentTarget.name;
+            // console.log(player);
+
+            const isGameOver = () =>{
+                setPlayer({...player, isGameOver: true})
+            }
+
+            if(!player.move.includes(pokemonName))
             {
-                // console.log("you lose");
-                checksHighScorer();
-                isSetGameOver(true);
-                // reset();
-            } else {
-                // console.log("Phew...!")
-                memory.push(e.currentTarget.name);
-                setPlayer({...player, score: player.score + 1});
-                if(memory.length === cards.length)
+                // memory.push(e.currentTarget.name);
+                setPlayer({...player, move: player.move.push(pokemonName)});
+                setPlayer({...player, score: player.score + 1})
+                
+                if(player.move.length !== cards.length)
                 {
-                    // console.log("You win!")
-                    checksHighScorer();
-                    isSetGameOver(true);
+                    console.log("Choose another one!")
+                    setCards(shuffledCards(cards));
              
                 } else {
-                    setCards(shuffledCards(cards));
+                    setMessage("You win!");
+                    isGameOver();
+                    // isSetGameOver(true);
                 }
+            } else {
+                setMessage("Sorry, you lose.  Try again!");
+                isGameOver(); // isSetGameOver(true);
+                // checksHighScorer();
+
             }
         };
 
-        const createNewPlayer = (name, level) =>{
-            setPlayer({...player, "name": name, "level": level, isGameOver: false});
+        const playAgainBtn = () =>{
+            console.log("Resets");
+            reset();
+            // setCards(shuffledCards(cards));
         }
         console.log(player);
 
-        const checksHighScorer = () =>{
-            if(player.score > highScorer.score){
-                // console.log(player.name + player.score);
-                setHighScorer({...highScorer, name: player.name, score: player.score})
-            }
-        }
-        const handleMenu = () =>{
+        const toMenuBtn = () =>{
+            console.log("to menu")
             reset();
             setIntroDisplay(prevState => !prevState);
         }
 
         const getLength = () =>{
             const getWidthWindow = document.querySelector(".game-content");
-            const length = getWidthWindow.offsetWidth/checkLevel(player.level);
+            const length = getWidthWindow.offsetWidth/checkLevel(player.mode);
 
             if(length < 150 || length > 300)
             {
@@ -154,11 +153,11 @@ const App = () => {
             }
         }
 
-        const Card = ({item, getInfo}) =>{
+        const Card = ({item, playerMove}) =>{
             const length = getLength();
     
             return(
-                <button className="cards" onClick={getInfo} name={item.name}>
+                <button className="cards" onClick={playerMove} name={item.name}>
                     <img key={item.id} width={`${length}`} className="pokemon-card" src = {item.imgUrl} />
                     <p className="pokemon-name" key={`${item.id}-text`}>{item.name}</p>
                 </button>
@@ -168,35 +167,24 @@ const App = () => {
             return (
                 <div className="game-container">
                     <div className="display-cards">
-                        {cards.map((item, index) =>{
-                            return(<Card key={index} item={item} getInfo={getInfo}/>)
+                        { cards.map((item, index) =>{
+                            return(<Card key={index} item={item} playerMove={playerMove}/>)
                         })}
                     </div>
                 </div>
             )
         }
-        const MessageBoard = ({player, handleToMenu, handleReset}) => {
-            return(
-                <div className="message-board">
-                    <h2>{player.name}, your score is {player.score}</h2>
-                    <div className="buttons-group">
-                        <button id="again" onClick={handleReset}>Again?</button>
-                        <button onClick= {handleToMenu}>Change Level</button>
-                    </div>            
-                </div>
-                )
-            }
 
         return(
             <>
-                <Header theme = {theme} highScorer = {highScorer} darkWhiteBtn = {changeTheme} isGameOver={isGameOver}/>
+                <Header theme = {theme} darkWhiteBtn = {changeTheme}/>
                 <div className="game-content">
                     {introDisplay && <MenuBox player = {player} createPlayer ={createNewPlayer} handle ={setIntroDisplay}/>}
 
                     {!introDisplay && 
                         <>
-                            {!isGameOver && <Memory />}
-                            {isGameOver && <MessageBoard player = {player} handleToMenu ={handleMenu} handleReset={reset}/>}
+                            {!player.isGameOver && <Memory />}
+                            {player.isGameOver && <MessageBoard player = {player} message = {message} history = {history} toMenuBtn ={toMenuBtn} playAgainBtn={playAgainBtn}/>}
                         </>
                     }       
                 </div>
