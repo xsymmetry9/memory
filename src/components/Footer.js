@@ -21,7 +21,7 @@ const Footer = ({theme, player}) =>{
             
             <div className="score-board">
                 <p className="left">{pName}</p>
-                <p className="right player-score">Score: {pScore}</p>
+                <p className="right player-score">Score: {pScore} </p>
             </div>  
             
         )
@@ -31,7 +31,7 @@ const Footer = ({theme, player}) =>{
             <footer className={`${theme === "light" ? "light-theme" : "dark-theme"}`}>
                 <div className="container">
                     {player.isGameOver && <FooterUser/>}
-                    {!(player.isGameOver) && <ScoreBoard pName = {player.name} pScore ={player.score}/>}
+                    {!(player.isGameOver) && <ScoreBoard pName = {player.name} pScore = {player.score}/>}
                 </div>
             </footer>
             
