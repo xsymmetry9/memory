@@ -14,11 +14,11 @@ const HighScoreBox = (props) =>{
 
     const History = ({history}) =>{
         return(
-            <div>
-                <ol>
+            <div className='history-container'>
+                <ol className='history-list'>
                     {history.map((item, index) =>{
                         return (
-                            <li key={index}>
+                            <li key={index} className='history-names'>
                                 <p>{item.name}</p>
                                 <p>{item.score}</p>
                             </li>

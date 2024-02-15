@@ -66,10 +66,9 @@ const App = () => {
 
         //game
         const [cards, setCards] = useState(Array.from({length: checkLevel(player.mode)}, () => ({})));
-        const [memory, setMemory] = useState([]);
 
         //high score box
-        const [history, setHistory] = useState([]); //could be set to local memory
+        const [history, setHistory] = useState([Array.from(10, () => ({name: '', score: 0}))]); //could be set to local memory
         const [message, setMessage] = useState("");
 
         useEffect(() => {
@@ -118,11 +117,14 @@ const App = () => {
                 } else {
                     setMessage("You win!");
                     isGameOver();
-                    // isSetGameOver(true);
+                    setHistory(prevHistory => [...prevHistory, {name: player.name, score: player.move.length}]);
+                    console.log(history);
                 }
             } else {
                 setMessage("Sorry, you lose.  Try again!");
-                isGameOver(); // isSetGameOver(true);
+                isGameOver(); 
+                setHistory(prevHistory => [...prevHistory, {name: player.name, score: player.move.length}]);
+                console.log(history);
                 // checksHighScorer();
 
             }
